@@ -72,6 +72,66 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 Client-server chat applications are versatile tools that facilitate real-time communication between users over a network. They incorporate various components, including server-side and client-side elements, and must consider factors such as security, scalability, and concurrency. As technology continues to advance, client-server chat applications remain integral for collaborative communication in various domains.
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
+### program
+~~~
+#Server.py
+
+import socket
+
+# Create the socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# This line prevents the "Address already in use" error
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+server.bind(("127.0.0.1", 55555))
+server.listen(1)
+print("Server is listening on port 65432...")
+
+client_socket, addr = server.accept()
+print(f"Connected to {addr}")
+
+done = False
+while not done:
+    # 1. Receive message from client first
+    msg = client_socket.recv(1024).decode('utf-8')
+    
+    if msg == 'quit' or not msg:
+        done = True
+    else:
+        print(f"Client: {msg}")
+        # 2. Send a response back
+        res = input("Message to client: ")
+        client_socket.send(res.encode('utf-8'))
+
+client_socket.close()
+server.close()
+##client.py
+
+import socket
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("127.0.0.1", 55555))
+
+done = False
+while not done:
+    # 1. Send message to server
+    msg = input("Message to server: ")
+    client.send(msg.encode('utf-8'))
+    
+    if msg == 'quit':
+        done = True
+    else:
+        # 2. Wait for server's response
+        data = client.recv(1024).decode('utf-8')
+        print(f"Server: {data}")
+
+client.close()
+~~~
+## Output:
+
+<img width="1486" height="373" alt="WhatsApp Image 2026-05-12 at 3 01 07 PM" src="https://github.com/user-attachments/assets/06623710-2a4e-405d-803a-69be98db503f" />
+
 
 
 ## Result:
