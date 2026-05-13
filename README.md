@@ -129,8 +129,8 @@ while not done:
 client.close()
 ~~~
 ## Output:
+<img width="1075" height="267" alt="WhatsApp Image 2026-05-13 at 3 16 46 PM" src="https://github.com/user-attachments/assets/92cbfdab-4ed6-492c-8f28-8e2014ffa4b0" />
 
-<img width="1486" height="373" alt="WhatsApp Image 2026-05-12 at 3 01 07 PM" src="https://github.com/user-attachments/assets/06623710-2a4e-405d-803a-69be98db503f" />
 
 
 
