@@ -74,59 +74,119 @@ Client-server chat applications are versatile tools that facilitate real-time co
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 ### program
 ~~~
-#Server.py
 
 import socket
 
-# Create the socket
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# This line prevents the "Address already in use" error
-server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-server.bind(("127.0.0.1", 55555))
+server.bind(("127.0.0.1", 5000))
 server.listen(1)
-print("Server is listening on port 65432...")
 
-client_socket, addr = server.accept()
-print(f"Connected to {addr}")
+print("Server waiting for connection...")
 
-done = False
-while not done:
-    # 1. Receive message from client first
-    msg = client_socket.recv(1024).decode('utf-8')
-    
-    if msg == 'quit' or not msg:
-        done = True
-    else:
-        print(f"Client: {msg}")
-        # 2. Send a response back
-        res = input("Message to client: ")
-        client_socket.send(res.encode('utf-8'))
+conn, addr = server.accept()
+print("Connected by:", addr)
 
-client_socket.close()
+# Conversation 1
+data = conn.recv(1024).decode()
+print("Client:", data)
+
+reply = "Hello message received. Welcome to the server!"
+conn.send(reply.encode())
+
+# Conversation 2
+data = conn.recv(1024).decode()
+print("Client:", data)
+
+reply = ("Saveetha Engineering College is well known for "
+         "its engineering courses, research activities, "
+         "and modern campus facilities.")
+conn.send(reply.encode())
+
+# Conversation 3
+data = conn.recv(1024).decode()
+print("Client:", data)
+
+reply = ("The college also encourages innovation, "
+         "technical events, coding competitions, "
+         "and industry-based learning.")
+conn.send(reply.encode())
+
+# Conversation 4
+data = conn.recv(1024).decode()
+print("Client:", data)
+
+reply = ("Students participate in workshops, hackathons, "
+         "and placement training programs regularly.")
+conn.send(reply.encode())
+
+# Conversation 5
+data = conn.recv(1024).decode()
+print("Client:", data)
+
+reply = "Process completed successfully. Closing connection."
+conn.send(reply.encode())
+
+print("process completed")
+
+conn.close()
 server.close()
-##client.py
 
 import socket
+import time
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("127.0.0.1", 55555))
 
-done = False
-while not done:
-    # 1. Send message to server
-    msg = input("Message to server: ")
-    client.send(msg.encode('utf-8'))
-    
-    if msg == 'quit':
-        done = True
-    else:
-        # 2. Wait for server's response
-        data = client.recv(1024).decode('utf-8')
-        print(f"Server: {data}")
+client.connect(("127.0.0.1", 5000))
+
+# Conversation 1
+msg = "Hi server, this is the client speaking."
+client.send(msg.encode())
+
+reply = client.recv(1024).decode()
+print("Server:", reply)
+
+time.sleep(1)
+
+# Conversation 2
+msg = "Can you tell me something about Saveetha Engineering College?"
+client.send(msg.encode())
+
+reply = client.recv(1024).decode()
+print("Server:", reply)
+
+time.sleep(1)
+
+# Conversation 3
+msg = "Does the college support technical development?"
+client.send(msg.encode())
+
+reply = client.recv(1024).decode()
+print("Server:", reply)
+
+time.sleep(1)
+
+# Conversation 4
+msg = "Are there activities like workshops and hackathons?"
+client.send(msg.encode())
+
+reply = client.recv(1024).decode()
+print("Server:", reply)
+
+time.sleep(1)
+
+# Conversation 5
+msg = "Thank you server, ending the conversation now."
+client.send(msg.encode())
+
+reply = client.recv(1024).decode()
+print("Server:", reply)
 
 client.close()
+
+
+
+
 ~~~
 ## Output:
 <img width="1075" height="267" alt="WhatsApp Image 2026-05-13 at 3 16 46 PM" src="https://github.com/user-attachments/assets/92cbfdab-4ed6-492c-8f28-8e2014ffa4b0" />
